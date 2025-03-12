@@ -1,44 +1,64 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
-import { UsuariosArmazanados } from "./usuario.dm";
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { UsuarioArmazenado } from "./usuario.dm";
 import { UsuarioEntity } from "./usuario.entity";
-
+import { criarUsuarioDTO } from "./dto/usurio.dto";
+import { v4 as uuid } from "uuid";
+import { ListaUsuarioDTO } from "./dto/consulta.dto";
+import { alteraUsuarioDTO } from "./dto/alteraUsuario.dto";
+ 
 @Controller('/usuarios')
-
-
 export class UsuarioController{
-    constructor(private clsUsuariosArmazenados: UsuariosArmazanados){
-    }
-
+constructor(private clsUsuariosArmazenados: UsuarioArmazenado){
+ 
+}
     @Post()
-    async criarUsuario(@Body() dadosUsuario){
-
-        var validacoes = this.clsUsuariosArmazenados.validaUsuario(dadosUsuario);
-
-        if(validacoes.length > 0){
-            return {
-                status: "Erro",
-                validacoes: validacoes
-            }
-        }
-
-        var novoUsuario = new UsuarioEntity(dadosUsuario.id, dadosUsuario.nome,
-                                            dadosUsuario.idade, dadosUsuario.cidade,
-                                            dadosUsuario.email, dadosUsuario.telefone,
-                                            dadosUsuario.senha);
+    async criaUsuario(@Body() dadosUsuario: criarUsuarioDTO){
+ 
+        var novoUsuario = new UsuarioEntity(uuid(), dadosUsuario.nome, dadosUsuario.idade,
+            dadosUsuario.cidade, dadosUsuario.email, dadosUsuario.telefone, dadosUsuario.senha);
         this.clsUsuariosArmazenados.AdicionarUsuario(novoUsuario);
-
+ 
         var usuario = {
-            dadosUsuario : novoUsuario,
+            dadosUsuario : dadosUsuario,
             status: "Usuario Criado"
         }
         return usuario;
     }
-
+ 
     @Get()
     async listaUsuarios(){
-        return this.clsUsuariosArmazenados.Usuarios;
+       
+        const usuariosListados = this.clsUsuariosArmazenados.usuario;
+        const listaRetorno = usuariosListados.map(
+            usuario => new ListaUsuarioDTO(
+                usuario.id,
+                usuario.nome,
+                usuario.email
+            )
+        );
+       
+        return listaRetorno;
+    }
+ 
+    @Put ('/:id')
+    async atualizaUsuario(@Param ('id') id:string, @Body() novosDados: alteraUsuarioDTO){
+        const usuarioAtualizado = await this.clsUsuariosArmazenados.atualizaUsuario(id, novosDados)
+ 
+        return{
+            usuario: usuarioAtualizado,
+            message: 'Usuário atualizado'
+        }
     }
 
+    @Delete('/:id')
+    async removeUsuario(@Param('id') id: string){
+        const UsuarioRemovido = await this.clsUsuariosArmazenados.removeUsuario(id)
+
+        return{
+            usuario: UsuarioRemovido,
+            message: 'Usuario Removido'
+        }
+    }
 }
 
 //sempre que tem @ é um decoretor. definnir um padrão para o que vem depois dele
