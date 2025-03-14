@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { UsuarioController } from "./usuario.controller";
 import { UsuarioArmazenado } from "./usuario.dm";
+import { FilmesModule } from "src/filme/filmes.module";
 
 @Module({
     imports:[],

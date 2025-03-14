@@ -8,9 +8,7 @@ import { alteraUsuarioDTO } from "./dto/alteraUsuario.dto";
  
 @Controller('/usuarios')
 export class UsuarioController{
-constructor(private clsUsuariosArmazenados: UsuarioArmazenado){
- 
-}
+constructor(private clsUsuariosArmazenados: UsuarioArmazenado){}
     @Post()
     async criaUsuario(@Body() dadosUsuario: criarUsuarioDTO){
  
