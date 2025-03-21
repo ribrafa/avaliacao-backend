@@ -3,10 +3,12 @@ import { UsuarioController } from "./usuario.controller";
 import { UsuarioArmazenado } from "./usuario.dm";
 import { FilmesModule } from "src/filme/filmes.module";
 
+import { StrongPassValidator } from "src/validacao/senha-forte.validator";
+
 @Module({
     imports:[],
     controllers:[UsuarioController],
-    providers:[UsuarioArmazenado]
+    providers:[UsuarioArmazenado, StrongPassValidator]
 })
 
 export class UsuarioModule{}

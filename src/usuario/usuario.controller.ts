@@ -5,6 +5,9 @@ import { criarUsuarioDTO } from "./dto/usurio.dto";
 import { v4 as uuid } from "uuid";
 import { ListaUsuarioDTO } from "./dto/consulta.dto";
 import { alteraUsuarioDTO } from "./dto/alteraUsuario.dto";
+import { get } from "http";
+import { LoginUsuarioDTO } from "./dto/loginUsuario.dto";
+import { log } from "console";
  
 @Controller('/usuarios')
 export class UsuarioController{
@@ -31,7 +34,12 @@ constructor(private clsUsuariosArmazenados: UsuarioArmazenado){}
             usuario => new ListaUsuarioDTO(
                 usuario.id,
                 usuario.nome,
-                usuario.email
+                usuario.idade,
+                usuario.cidade,
+                usuario.email,
+                usuario.telefone,
+                usuario.senha
+
             )
         );
        
@@ -55,6 +63,17 @@ constructor(private clsUsuariosArmazenados: UsuarioArmazenado){}
         return{
             usuario: UsuarioRemovido,
             message: 'Usuario Removido'
+        }
+    }
+
+    @Post('/login')
+    async login(@Body() dadosLogin: LoginUsuarioDTO){
+        var login = this.clsUsuariosArmazenados.validarLogin(dadosLogin.email,dadosLogin.senha);
+        return {
+            status: login.login,
+            usuario: login.login?login.usuario:null,
+            message: login.login?"login efetuado":"usuario ou senhas invalidos",
+            
         }
     }
 }
