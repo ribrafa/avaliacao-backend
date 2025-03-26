@@ -20,7 +20,7 @@ export class FilmesController {
  
         var filmes = {
             dadosFilme : dadosFilme,
-            status: "Filme Criado"
+            status: "Filme criado"
         }
         return filmes;
     }
