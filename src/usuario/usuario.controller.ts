@@ -8,11 +8,16 @@ import { alteraUsuarioDTO } from "./dto/alteraUsuario.dto";
 import { get } from "http";
 import { LoginUsuarioDTO } from "./dto/loginUsuario.dto";
 import { log } from "console";
+import { ApiBadRequestResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
  
+
+@ApiTags('usuario')
 @Controller('/usuarios')
 export class UsuarioController{
 constructor(private clsUsuariosArmazenados: UsuarioArmazenado){}
     @Post()
+    @ApiResponse({status: 201, description: "Retorna que houve sucesso"})
+    @ApiBadRequestResponse({description: "Retorna que faltou alguma informação"})
     async criaUsuario(@Body() dadosUsuario: criarUsuarioDTO){
  
         var novoUsuario = new UsuarioEntity(uuid(), dadosUsuario.nome, dadosUsuario.idade,

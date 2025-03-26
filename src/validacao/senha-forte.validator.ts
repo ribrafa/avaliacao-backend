@@ -8,12 +8,12 @@ import { Injectable } from "@nestjs/common";
 export class StrongPassValidator implements ValidatorConstraintInterface{
  
     async validate(value: string, validationArguments?: ValidationArguments): Promise<boolean> {
-        // var validarSenha = true;
-        // if (value){
-        //     const result = zxcvbn(value);
-        //     var validarSenha = (result.score <= 2);
-        // }
-        // return !validarSenha;
+        var validarSenha = true;
+        if (value){
+            const result = zxcvbn(value);
+            var validarSenha = (result.score <= 2);
+        }
+        return !validarSenha;
         return true
     }
 }

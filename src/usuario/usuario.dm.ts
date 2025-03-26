@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { UsuarioEntity } from "./usuario.entity";
 import e from "express";
+import { unsafeStringify } from "uuid/dist/cjs/stringify";
 
 
 @Injectable()
@@ -32,14 +33,13 @@ export class UsuarioArmazenado{
 
         Object.entries(dadosAtualizacao).forEach(
             ([chave,valor]) => {
+                if (valor === undefined){
+                    return
+                }
                 if(chave === 'id'){
                     return
                 }
                 else if (chave === 'senha'){
-                    return
-                }
-            
-                if (valor === undefined){
                     return
                 }
 
