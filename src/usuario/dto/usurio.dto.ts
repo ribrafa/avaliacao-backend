@@ -20,10 +20,24 @@ export class criarUsuarioDTO{
 
     @IsString()
     @ApiProperty({
-        example: 'Bauru,SP',
-        description: 'Esse campo vai ser utilizado como identificação da cidade do usuario'
+        example: '1700000',
+        description: 'CEP precisa ter no minimo 8 caracteres'
     })
-    cidade: string;
+    cep: string;
+
+    @IsString()
+    @ApiProperty({
+        example: 'Apartamento 42',
+        description: 'Esse campo vai ser utilizado como identificação do Complemento'
+    })
+    complemento: string;
+
+    // @IsString()
+    // @ApiProperty({
+    //     example: 'Bauru,SP',
+    //     description: 'Esse campo vai ser utilizado como identificação da cidade do usuario'
+    // })
+    // cidade: string;
 
     @IsEmail(undefined,{message: "email é invalido"})
     @ApiProperty({

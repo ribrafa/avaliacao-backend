@@ -20,13 +20,22 @@ export class alteraUsuarioDTO{
     })
     idade: Number;
 
+
     @IsString()
     @IsOptional()
     @ApiProperty({
-        example: 'Bauru,SP',
-        description: 'Esse campo vai ser utilizado como identificação da cidade do usuario'
+        example: '1700000',
+        description: 'Esse campo vai ser utilizado como identificação do CEP'
     })
-    cidade: string;
+    cep: string;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({
+        example: 'Apartamento 42',
+        description: 'Esse campo vai ser utilizado como identificação do Complemento'
+    })
+    complemento: string;
 
     @IsEmail(undefined,{message: "email é invalido"})
     @IsOptional()
