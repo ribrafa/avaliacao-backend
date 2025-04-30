@@ -53,7 +53,7 @@ export class GeneroService {
         });
     }
 
-    async localizarId(ID: string): Promise<GENERO> {
+    async localizarID(ID: string): Promise<GENERO> {
         const genero = await this.generoRepository.findOne({
             where: {
                 ID,
