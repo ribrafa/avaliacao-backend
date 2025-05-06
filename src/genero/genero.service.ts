@@ -11,7 +11,11 @@ export class GeneroService {
     constructor(
         @Inject('GENERO_REPOSITORY')
         private generoRepository: Repository<GENERO>,
-    ) { }
+    ) {}
+
+    async listar(): Promise<GENERO[]> {
+        return this.generoRepository.find();
+    }
 
     async inserir(dados: CriaGeneroDTO): Promise<RetornoCadastroDTO> {
         let genero = new GENERO();
@@ -66,6 +70,33 @@ export class GeneroService {
         return genero;
     }
 
+    async alterar (id: string, dados: AlteraGeneroDTO): Promise<RetornoCadastroDTO> {
+        const genero = await this.localizarID(id);
 
+        Object.entries(dados).forEach(
+            ([chave, valor]) => {
+                if(chave === 'id'){
+                    return;
+                }
+
+                genero[chave] = valor;
+            }
+        )
+        
+        return this.generoRepository.save(genero)
+        .then((result) => {
+            return <RetornoCadastroDTO>{
+                id: genero.ID,
+                message: "Genero cadastrado!"
+            };
+        })
+        .catch((error) => {
+            return <RetornoCadastroDTO>{
+                id: "",
+                message: "Houve um erro ao cadastrar." + error.message
+            };
+        })
+
+    }
 
 }
