@@ -1,4 +1,5 @@
-import { Column, PrimaryColumn } from "typeorm";
+import { GENERO } from "src/genero/genero.entity";
+import { Column, JoinColumn, ManyToMany, ManyToOne, PrimaryColumn } from "typeorm";
 
 export class FILME{
     @PrimaryColumn()
@@ -16,6 +17,9 @@ export class FILME{
     @Column('int')
     ANO: number;
 
-    @Column()
-    GENERO: string;
+    @ManyToOne(() => GENERO, genero => genero.filmes)
+    @JoinColumn({name: "IDGENERO", referencedColumnName:"ID"})
+    GENERO: GENERO;
+
+
 }
