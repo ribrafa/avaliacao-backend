@@ -3,19 +3,28 @@
 
 import { Module } from '@nestjs/common';
 import { FilmeController } from './filme.controller';
-import { DatabaseModule } from 'src/database/database.module';
 import { filmeProviders } from './filmes.providers';
-import { FilmeService } from './filme.service';
-import { generoProviders } from 'src/genero/genero.providers';
+import { generoProviders } from '../genero/genero.providers';
 import { GeneroService } from 'src/genero/genero.service';
+import { FilmeService } from './filme.service';
+import { DatabaseModule } from 'src/database/database.module';
+import { pessoaProviders } from 'src/pessoa/pessoa.providers';
+import { PessoaService } from 'src/pessoa/pessoa.service';
+import { filme_pessoaProviders } from 'src/filme_pessoa/filme_pessoa.providers';
+import { FILME_PESSOAService } from 'src/filme_pessoa/filme_pessoa.service';
 
 @Module({  
   imports: [DatabaseModule],
   controllers: [FilmeController],  
-  providers: [...filmeProviders,
+  providers: [
+    ...filmeProviders,
     FilmeService,
+    ...pessoaProviders,
+    PessoaService,
+    ...filme_pessoaProviders,
+    FILME_PESSOAService,
     ...generoProviders,
-  GeneroService,
-],
+    GeneroService,
+    ],
 })
 export class FilmeModule {}
