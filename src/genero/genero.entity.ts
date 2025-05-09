@@ -12,6 +12,6 @@ export class GENERO {
     @Column({length: 255})
     DESCRICAO: string;
 
-    @OneToMany(() => FILME, filme=>filme.genero)
+    @OneToMany(() => FILME, filme=>filme.GENERO)
     filmes:FILME[];
 }

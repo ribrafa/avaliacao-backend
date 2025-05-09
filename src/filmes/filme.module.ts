@@ -3,10 +3,19 @@
 
 import { Module } from '@nestjs/common';
 import { FilmeController } from './filme.controller';
-import { FilmesArmazenados } from './filme.dm';
+import { DatabaseModule } from 'src/database/database.module';
+import { filmeProviders } from './filmes.providers';
+import { FilmeService } from './filme.service';
+import { generoProviders } from 'src/genero/genero.providers';
+import { GeneroService } from 'src/genero/genero.service';
 
 @Module({  
+  imports: [DatabaseModule],
   controllers: [FilmeController],  
-  providers: [FilmesArmazenados],
+  providers: [...filmeProviders,
+    FilmeService,
+    ...generoProviders,
+  GeneroService,
+],
 })
 export class FilmeModule {}
