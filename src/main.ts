@@ -3,15 +3,15 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
- 
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
- 
+  
   app.useGlobalPipes(
-    new ValidationPipe ({
+    new ValidationPipe({
       transform: true,
       whitelist: true,
-      forbidNonWhitelisted: true
+      forbidNonWhitelisted: true,
     })
   )
 
@@ -26,11 +26,12 @@ async function bootstrap() {
   .addTag('filme')
   .addTag('serie')
   .build();
-
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
- 
-  useContainer(app.select(AppModule),{fallbackOnErrors: true})
-  await app.listen(process.env.PORT ?? 3000);
+
+  
+  useContainer(app.select(AppModule),{fallbackOnErrors:true})
+  app.enableCors();
+  await app.listen(3000);
 }
 bootstrap();

@@ -8,10 +8,10 @@ import { alteraFilmeDTO } from './dto/alteraFilme.dto';
 import { GENERO } from 'src/genero/genero.entity';
 import { GeneroService } from 'src/genero/genero.service';
 import { ListaFilmeDTO } from './dto/listaFilme.dto';
+import { atorFilmeDTO } from './dto/atorFilme.dto';
 import { RetornoElencoDTO } from 'src/filme_pessoa/dto/retornoElenco.dto';
 import { FILME_PESSOAService } from 'src/filme_pessoa/filme_pessoa.service';
 import { PessoaService } from 'src/pessoa/pessoa.service';
-import { atorFilmeDTO } from './dto/atorFilme.dto';
 
 @Injectable()
 export class FilmeService {
@@ -60,7 +60,7 @@ export class FilmeService {
         filme.ANO = dados.ANO;
         filme.DURACAO = dados.DURACAO;
         filme.SINOPSE = dados.SINOPSE;
-        filme.GENERO = await this.generoService.localizarID(dados.GENERO);
+        filme.genero = await this.generoService.localizarID(dados.GENERO);
 
     return this.filmeRepository.save(filme)
     .then((result) => {

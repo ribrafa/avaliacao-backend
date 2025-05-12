@@ -1,16 +1,22 @@
-import { Module } from "@nestjs/common";
-import { UsuarioController } from "./usuario.controller";
-import { UsuarioArmazenado } from "./usuario.dm";
-import { FilmesModule } from "src/filme/filmes.module";
-import { StrongPassValidator } from "src/validacao/senha-forte.validator";
-import { HttpModule } from "@nestjs/axios";
+//classe de modulo do usuário, responsável por administrar todo o modulo de usuário, incluindo controller, DM, e validators, 
+//tudo o que o modulo de usuário contem, é adinistrado pela classe de módulo
 
-@Module({
-    imports:[HttpModule],
-    controllers:[UsuarioController],
-    providers:[UsuarioArmazenado, StrongPassValidator]
+import { Module } from '@nestjs/common';
+import { UsuarioController } from './usuario.controller';
+import { emailUnicoValidator } from './validacao/email-unico.validator';
+import { USUARIOService } from './usuario.service';
+import { usuarioProviders } from './usuario.providers';
+import { DatabaseModule } from 'src/database/database.module';
+import { pessoaProviders } from 'src/pessoa/pessoa.providers';
+import { PessoaService } from 'src/pessoa/pessoa.service';
+
+@Module({  
+  imports: [DatabaseModule],
+  controllers: [UsuarioController],  
+  providers: [...usuarioProviders,
+    USUARIOService,
+    ...pessoaProviders,
+    PessoaService,
+    emailUnicoValidator],
 })
-
-export class UsuarioModule{}
-
-//nesse caso o decorater precisa dessas orientações, diferente do arquivo controller
+export class UsuarioModule {}

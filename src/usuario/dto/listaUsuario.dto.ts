@@ -1,18 +1,18 @@
 
 //classe DTO para retorno de listagem padronizada de usuários
 //DTO é "data transfer object" ou objeto de transferencia de dados, ou seja, é um tipo de classe para transferir dados
-export class ListaFilmeDTO{
+export class ListaUsuarioDTO{
     //dtos de resposta normalmente não tem nenhuma validação, apenas o constructor com os campos a serem retornados
     constructor(
-            readonly ID: string, 
-            readonly NOME:string,
-            readonly DURACAO: number,
-            readonly SINOPSE: string
+            readonly id: string, 
+            readonly nome:string,
+            readonly email: string,
+            readonly foto:string
     ){}
 }
 
-export class ListagemFilmesDTO{
+export class ListagemUsuariosDTO{
     constructor(
-        readonly FILME: ListaFilmeDTO[],
+        readonly usuario: ListaUsuarioDTO[],
     ){}
 }

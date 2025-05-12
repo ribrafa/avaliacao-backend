@@ -1,40 +1,50 @@
 import * as bcrypt from 'bcrypt';
+import { FILES } from 'src/files/files.entity';
+import { PESSOA } from 'src/pessoa/pessoa.entity';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+
+//classe de usuário, utilizado para manter padrão dos usuários armazenados
+@Entity()
+export class USUARIO{
+    @PrimaryColumn()
+    ID: string;
+
+    @Column({length: 255})
+    CIDADE: string;
+
+    @Column({length: 255})
+    EMAIL: string;
+
+    @Column({length: 255})
+    TELEFONE: string;
+
+    @Column({ type: 'datetime' })
+    ASSINATURA: Date; 
+
+    @Column({length: 255})
+    SENHA: string; 
+
+    @Column({length: 255})
+    IDPESSOA: string; 
+
+    @Column({length: 255})
+    FOTO:string;
 
 
-export class UsuarioEntity{
-    id: string;
-    nome: string;
-    idade: Number;
-    cep: string;
-    endereco: string;
-    complemento: string;
-    cidade: string;
-    email: string;
-    telefone: string;
-    senha: string;
-    constructor(id: string, nome: string, idade: Number, cep: string, endereco: string, complemento: string, cidade: string, email: string, telefone: string, senha: string){
+    @OneToOne(() => PESSOA)
+    @JoinColumn({ name: 'IDPESSOA', referencedColumnName:'ID'})
+    PESSOA: PESSOA;
+
+    @OneToOne(() => FILES)
+    @JoinColumn({ name: 'FOTO', referencedColumnName:'ID'})
+    FILE: FILES;
+  
+    trocaSenha(senha){
         const saltOrRounds = 10;
-
-        this.id = id;
-        this.nome = nome;
-        this.idade  = idade;
-        this.cep = cep;
-        this.endereco = endereco;
-        this.complemento = complemento;
-        this.cidade = cidade;
-        this.email = email;
-        this.telefone = telefone;
-        this.senha = bcrypt.hashSync(senha,saltOrRounds);
+        this.SENHA = bcrypt.hashSync(senha,saltOrRounds)
     }
 
-    trocarSenha(senhaNova){
-        const saltOrRounds = 10;
-        this.senha = bcrypt.hashSync(senhaNova,saltOrRounds)
-    }
-
-    Login(senha){
-        return bcrypt.compareSync(senha,this.senha);
+    login(senha){
+        return bcrypt.compareSync(senha,this.SENHA);
     }
 }
-
-

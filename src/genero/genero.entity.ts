@@ -4,7 +4,7 @@ import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 @Entity()
 export class GENERO {
     @PrimaryColumn()
-    ID: string;
+    ID:string;
 
     @Column({length: 255})
     NOME: string;
@@ -12,6 +12,6 @@ export class GENERO {
     @Column({length: 255})
     DESCRICAO: string;
 
-    @OneToMany(() => FILME, filme=>filme.GENERO)
+    @OneToMany(() => FILME, filme=>filme.genero)
     filmes:FILME[];
 }

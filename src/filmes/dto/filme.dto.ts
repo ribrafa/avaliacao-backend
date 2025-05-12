@@ -27,10 +27,10 @@ export class criaFilmeDTO{
     })
     SINOPSE: string;
 
-    @IsString()
+    @IsNumber()
     @ApiProperty({
         example: "1990",
-        description: "Ano de lançamento do filme, deve ser informado como texto"
+        description: "Ano de lançamento do filme, deve ser informado como numero"
     })
     ANO: number;
 

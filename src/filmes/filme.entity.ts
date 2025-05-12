@@ -7,13 +7,13 @@ export class FILME{
     @PrimaryColumn()
     ID: string;
 
-    @Column()
+    @Column({length:255})
     NOME: string;
 
     @Column('int')
     DURACAO: number;
 
-    @Column()
+    @Column({length:255})
     SINOPSE: string;
 
     @Column('int')
@@ -21,12 +21,13 @@ export class FILME{
 
     @ManyToOne(() => GENERO, genero => genero.filmes)
     @JoinColumn({name: "IDGENERO", referencedColumnName:"ID"})
-    GENERO: GENERO;
+    genero: GENERO;
+
 
     @ManyToMany(
         () => PESSOA,
         ator => ator.filmes,
         {onDelete: 'NO ACTION', onUpdate: 'NO ACTION',},
-    )
+      )
     atores?: PESSOA[];
 }

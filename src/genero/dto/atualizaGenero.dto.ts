@@ -1,17 +1,14 @@
 import { Optional } from "@nestjs/common";
-import { IsString, IsNotEmpty } from "class-validator";
-
-
+import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class AlteraGeneroDTO{
     @IsString()
-    @Optional()
+    @IsOptional()
     @IsNotEmpty({message: "Nome não pode ser vazio"})
     NOME: string;
 
     @IsString()
-    @Optional()
+    @IsOptional()
     @IsNotEmpty({message: "Descrição não pode ser vazio"})
     DESCRICAO: string;
-
 }

@@ -1,11 +1,11 @@
 //DTO de resposta padrão, onde é utilizado como padrão para retornos de alteração, exclusão ou inclusão de dados de usuários
 //DTO é "data transfer object" ou objeto de transferencia de dados, ou seja, é um tipo de classe para transferir dados
 
-import { FILME } from "../filme.entity";
+import { USUARIO } from "../usuario.entity";
 
-export class RetornoFilmeDTO{
+export class RetornoUsuarioDTO{
     constructor(
-        readonly STATUS: string,
-        readonly FILME: FILME
+        readonly status: string,
+        readonly usuario: USUARIO | null
         ){}
 }

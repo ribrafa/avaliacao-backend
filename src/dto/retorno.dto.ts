@@ -1,4 +1,5 @@
-import { IsEmail, IsInt, IsNotEmpty, IsString, MinLength } from "class-validator"
+import { IsEmail, IsInt, IsNotEmpty, IsString, MinLength } from "class-validator";
+
 
 export class RetornoCadastroDTO{
     id: string;
